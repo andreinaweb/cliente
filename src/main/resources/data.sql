@@ -1,0 +1,3 @@
+INSERT INTO CLIENTE(id, nome) VALUES (1, 'Moacyr')
+INSERT INTO CLIENTE(id, nome) VALUES (2, 'AC')
+INSERT INTO CLIENTE(id, nome) VALUES (3, 'Andrei')
