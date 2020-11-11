@@ -2,6 +2,7 @@ package br.com.original.cliente.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -39,11 +40,16 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/{id}")
-	public ClienteDto clientePorId(@PathVariable("id") long id){
+	public ResponseEntity<ClienteDto> clientePorId(@PathVariable("id") long id){
 		
-			Cliente cliente = clienteRepository.getOne(id);
-			return new ClienteDto(cliente);
+			Optional<Cliente> cliente = clienteRepository.findById(id);
+			if(cliente.isPresent()) {
 				
+				return ResponseEntity.ok(new ClienteDto(cliente.get()));
+			}
+			
+			return ResponseEntity.notFound().build();
+			
 	}
 	
 	@PostMapping
@@ -68,8 +74,14 @@ public class ClienteController {
 	@Transactional
 	public ResponseEntity<ClienteDto> atualizaCliente(@PathVariable Long id, @RequestBody @Valid ClienteForm form){
 		
-		Cliente cliente = form.atualizar(id, clienteRepository);		
-		return ResponseEntity.ok(new ClienteDto(cliente));
+		Optional<Cliente> optional = clienteRepository.findById(id);
+		if(optional.isPresent()) {
+			
+			Cliente cliente = form.atualizar(id, clienteRepository);			
+			return ResponseEntity.ok(new ClienteDto(cliente));
+		}
+		
+		return ResponseEntity.notFound().build();
 		
 	}
 	
@@ -81,6 +93,7 @@ public class ClienteController {
 		return ResponseEntity.ok().build();
 		
 	}
+	
 	
 	
 }
