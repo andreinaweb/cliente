@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import br.com.original.cliente.controller.dto.ClienteDto;
 import br.com.original.cliente.controller.form.ClienteForm;
-import br.com.original.cliente.modelo.Cliente;
+import br.com.original.cliente.model.Cliente;
 import br.com.original.cliente.repository.ClienteRepository;
 
 @RestController
@@ -32,12 +33,17 @@ public class ClienteController {
 	private ClienteRepository clienteRepository;
 	
 	@GetMapping
-	public List<ClienteDto> listaClientes(){
+	public List<ClienteDto> listaClientes(String nome){
 		
+		if(nome == null) {
 			List<Cliente> clientes = clienteRepository.findAll();			
 			return ClienteDto.converter(clientes);
-		
+		}else {
+			List<Cliente> clientes = clienteRepository.findByNome(nome);
+			return ClienteDto.converter(clientes);
+		}
 	}
+		
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDto> clientePorId(@PathVariable("id") long id){
@@ -51,6 +57,8 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 			
 	}
+	
+
 	
 	@PostMapping
 	@Transactional

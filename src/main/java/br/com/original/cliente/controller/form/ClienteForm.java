@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.original.cliente.modelo.Cliente;
+import br.com.original.cliente.model.Cliente;
 import br.com.original.cliente.repository.ClienteRepository;
 
 

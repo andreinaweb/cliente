@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.original.cliente.exception.ExpectGeneralException;
-import br.com.original.cliente.modelo.Cliente;
+import br.com.original.cliente.model.Cliente;
 import br.com.original.cliente.repository.ClienteRepository;
 
 @ExtendWith(SpringExtension.class)
