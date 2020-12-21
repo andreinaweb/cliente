@@ -4,10 +4,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.original.cliente.model.Cliente;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value = "ClienteOut", description = "Representa um cliente")
 public class ClienteDto {
 	
+	@ApiModelProperty(value = "Id de um cliente", example = "3")
 	private Long id;
+	
+	@ApiModelProperty(value = "Nome de um cliente", example = "Jesus", required = true)
 	private String nome;	
 	
 	public ClienteDto(Cliente cliente) {

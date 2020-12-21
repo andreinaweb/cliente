@@ -17,6 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<spring-fox.version>2.9.2</spring-fox.version>
 	</properties>
 
 	<dependencies>
@@ -78,6 +79,25 @@
 		    <artifactId>junit</artifactId>
 		    <scope>test</scope>
 		</dependency>		
+		
+		<!-- Dependências Swagger Algaworks -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>${spring-fox.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>${spring-fox.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-bean-validators</artifactId>
+		    <version>${spring-fox.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -24,7 +24,11 @@ import br.com.original.cliente.controller.dto.ClienteDto;
 import br.com.original.cliente.controller.form.ClienteForm;
 import br.com.original.cliente.model.Cliente;
 import br.com.original.cliente.repository.ClienteRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
+@Api(tags = "Clientes")
 @RestController
 @RequestMapping(value = "/clientes")
 public class ClienteController {
@@ -32,6 +36,7 @@ public class ClienteController {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@ApiOperation("Lista todos os clientes")
 	@GetMapping
 	public List<ClienteDto> listaClientes(String nome){
 		
@@ -44,13 +49,12 @@ public class ClienteController {
 		}
 	}
 		
-	
+	@ApiOperation("Lista um cliente pelo ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDto> clientePorId(@PathVariable("id") long id){
+	public ResponseEntity<ClienteDto> clientePorId(@ApiParam(value = "Id de um cliente", example = "1") @PathVariable("id") long id){
 		
 			Optional<Cliente> cliente = clienteRepository.findById(id);
-			if(cliente.isPresent()) {
-				
+			if(cliente.isPresent()) {				
 				return ResponseEntity.ok(new ClienteDto(cliente.get()));
 			}
 			
@@ -59,10 +63,11 @@ public class ClienteController {
 	}
 	
 
-	
+	@ApiOperation("Adiciona um novo cliente")
 	@PostMapping
 	@Transactional
-	public ResponseEntity<ClienteDto> cadastraCliente(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ClienteDto> cadastraCliente(@ApiParam(name = "corpo", value = "Representação de um novo cliente") 
+			@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
 		
 		try {
 			
@@ -78,9 +83,11 @@ public class ClienteController {
 		} 
 	}
 	
+	@ApiOperation("Atualiza os dados de um cliente")
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<ClienteDto> atualizaCliente(@PathVariable Long id, @RequestBody @Valid ClienteForm form){
+	public ResponseEntity<ClienteDto> atualizaCliente(@ApiParam(value = "ID de um cliente para atualizar", example = "1")
+			@PathVariable Long id, @ApiParam(name = "corpo", value = "Representação de cliente atualizado") @RequestBody @Valid ClienteForm form){
 		
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		if(optional.isPresent()) {
@@ -93,9 +100,10 @@ public class ClienteController {
 		
 	}
 	
+	@ApiOperation("Exclui um cliente")
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> removeCliente(@PathVariable Long id){
+	public ResponseEntity<?> removeCliente(@ApiParam(value = "ID de um cliente para excluir", example = "1") @PathVariable Long id){
 		
 		clienteRepository.deleteById(id);
 		return ResponseEntity.ok().build();
